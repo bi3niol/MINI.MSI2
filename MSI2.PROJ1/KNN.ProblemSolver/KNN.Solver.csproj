@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}</ProjectGuid>
+    <ProjectGuid>{7127BA6E-CA69-4CAF-88B6-F4E6A60CE053}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>KNN.Solver</RootNamespace>
     <AssemblyName>KNN.Solver</AssemblyName>

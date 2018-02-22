@@ -1,4 +1,4 @@
-﻿using KNN.Library.ProblemEntities;
+﻿using KNN.Solver.ProblemEntities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,7 +27,7 @@ namespace KNN.WindowApp.GraphManager
         {
             this.zedGraph = zedGraph;
         }
-        public void UpdateGraph(List<KNN.Library.ProblemEntities.Point> points)
+        public void UpdateGraph(List<KNN.Solver.ProblemEntities.Point> points)
         {
             Dictionary<int, PointPairList> class_point = new Dictionary<int, PointPairList>();
             foreach (var point in points)

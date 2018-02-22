@@ -14,16 +14,16 @@ namespace KNN.Library
 		/// </summary>
 		public double P
 		{
-			get; private set;
+			get; set;
 		}
 		public List<T> TrainSet
 		{
-			get; private set;
+			get; set;
 		}
 
         public List<T> TestSet
         {
-            get; private set;
+            get; set;
         }
         /// <summary>
         /// number of neighbors
@@ -33,6 +33,8 @@ namespace KNN.Library
 			get; set;
 		}
 
+        public AlgorithmEngine() { }
+
 		public AlgorithmEngine(int k, double p, List<T> trainSet, List<T> testSet)
 		{
 			K = k;
@@ -41,19 +43,28 @@ namespace KNN.Library
             TestSet = testSet;
 		}
 
-		public List<Tuple<T, TClassifier>> KnnRun()
-		{
+        public List<Tuple<T, TClassifier>> KnnRun()
+        {
             List<Tuple<T, TClassifier>> results = new List<Tuple<T, TClassifier>>();
 
-            foreach (var item in TestSet) {
+            foreach (var item in TestSet)
+            {
                 Console.WriteLine("Trwa obliczanie...");
                 results.Add(new Tuple<T, TClassifier>(item, GetMostCommonClassifier(GetKNeighbors(item))));
             }
 
             return results;
-		}
+        }
 
-		private TClassifier GetMostCommonClassifier(List<T> list)
+        public List<T> KnnRun(List<T> testSet)
+        {
+            foreach (var item in testSet)
+                item.Classifier = GetMostCommonClassifier(GetKNeighbors(item));
+
+            return testSet;
+        }
+
+        private TClassifier GetMostCommonClassifier(List<T> list)
 		{
 			Dictionary<TClassifier, int> counters = new Dictionary<TClassifier, int>();
 			TClassifier res = default(TClassifier);
@@ -83,7 +94,7 @@ namespace KNN.Library
 					sortedList.Add(distance, item);
 				else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
                 {
-                    sortedList.Remove(sortedList.ElementAt(sortedList.Count - 1).Key);
+                    sortedList.RemoveAt(sortedList.Count - 1);
                     sortedList.Add(distance, item);
                 }
             }

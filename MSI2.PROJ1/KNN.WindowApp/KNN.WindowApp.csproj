@@ -92,6 +92,10 @@
       <Project>{1C41BC0D-0C50-488A-949F-B3D491C5D655}</Project>
       <Name>KNN.Library</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KNN.ProblemSolver\KNN.Solver.csproj">
+      <Project>{7127BA6E-CA69-4CAF-88B6-F4E6A60CE053}</Project>
+      <Name>KNN.Solver</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

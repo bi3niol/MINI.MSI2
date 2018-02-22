@@ -1,4 +1,5 @@
 ﻿using KNN.Library;
+using KNN.Solver.IO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,9 +16,9 @@ namespace KNN.WindowApp
     public partial class Form1 : Form
     {
         private GraphManager.GraphManager graphManager;
-        private AlgorithmEngine<KNN.Library.ProblemEntities.Point, int> algorithm;
-        private List<Library.ProblemEntities.Point> trainSet;
-        private List<Library.ProblemEntities.Point> otherSet;
+        private AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int> algorithm;
+        private List<KNN.Solver.ProblemEntities.Point> treinSet;
+        private List<KNN.Solver.ProblemEntities.Point> otherSet;
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +26,7 @@ namespace KNN.WindowApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            algorithm = new AlgorithmEngine<Library.ProblemEntities.Point, int>(5, 2, trainSet);
+            algorithm = new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>();
             trackBar1_Scroll(this, EventArgs.Empty);
             trackBar2_Scroll(this, EventArgs.Empty);
             graphManager = new GraphManager.GraphManager(zedGraphControl1);
@@ -55,15 +56,47 @@ namespace KNN.WindowApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            graphManager.UpdateGraph(algorithm.KnnRun(otherSet));
+            bool canRun = true;
+            string msg = "";
+            if (algorithm.TrainSet == null)
+            {
+                msg = "Train set is null";
+                canRun = false;
+            }
+            if (otherSet == null)
+            {
+                msg += "\n Test set is null";
+                canRun = false;
+            }
+            if (canRun)
+                graphManager.UpdateGraph(algorithm.KnnRun(otherSet));
+            else
+                MessageBox.Show(msg);
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            var res =saveFileDialog1.ShowDialog();
-            if(res == DialogResult.OK)
+            var res = saveFileDialog1.ShowDialog();
+            if (res == DialogResult.OK)
             {
                 zedGraphControl1.MasterPane.GetImage().Save(saveFileDialog1.FileName);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                treinSet = new TrainDataLoader().TryLoadData(openFileDialog1.FileName);
+                algorithm.TrainSet = treinSet;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                otherSet = new TrainDataLoader().TryLoadData(openFileDialog1.FileName);
             }
         }
     }
