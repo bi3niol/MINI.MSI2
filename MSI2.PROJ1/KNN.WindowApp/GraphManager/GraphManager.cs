@@ -37,12 +37,7 @@ namespace KNN.WindowApp.GraphManager
                     class_point.Add(point.Classifier, new PointPairList( new double[]{ point.X },new double []{ point.Y}));
             // get a reference to the GraphPane
             GraphPane myPane = zedGraph.GraphPane;
-
-            // Set the Titles
-            myPane.Title.Text = "K-nearest neighbours";
-            myPane.XAxis.Title.Text = "X Axis";
-            myPane.YAxis.Title.Text = "Y Axis";
-
+            myPane.CurveList.Clear();
             foreach (var key in class_point.Keys)
                 myPane.AddCurve("Set " + key, class_point[key], colors[key % colors.Length]).Line.IsVisible = false;
 

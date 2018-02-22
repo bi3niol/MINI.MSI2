@@ -34,6 +34,9 @@
             this.KLabel = new System.Windows.Forms.Label();
             this.trackBar2 = new System.Windows.Forms.TrackBar();
             this.PLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
@@ -93,11 +96,33 @@
             this.PLabel.TabIndex = 2;
             this.PLabel.Text = "P";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(683, 171);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(195, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Run Knn";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // SaveBtn
+            // 
+            this.SaveBtn.Location = new System.Drawing.Point(683, 200);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(195, 23);
+            this.SaveBtn.TabIndex = 4;
+            this.SaveBtn.Text = "Save Graph";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(909, 542);
+            this.Controls.Add(this.SaveBtn);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.PLabel);
             this.Controls.Add(this.KLabel);
             this.Controls.Add(this.trackBar2);
@@ -120,6 +145,9 @@
         private System.Windows.Forms.Label KLabel;
         private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.Label PLabel;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button SaveBtn;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

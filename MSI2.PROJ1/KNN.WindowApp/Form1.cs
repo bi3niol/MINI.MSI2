@@ -16,6 +16,8 @@ namespace KNN.WindowApp
     {
         private GraphManager.GraphManager graphManager;
         private AlgorithmEngine<KNN.Library.ProblemEntities.Point, int> algorithm;
+        private List<Library.ProblemEntities.Point> trainSet;
+        private List<Library.ProblemEntities.Point> otherSet;
         public Form1()
         {
             InitializeComponent();
@@ -23,8 +25,17 @@ namespace KNN.WindowApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            algorithm = new AlgorithmEngine<Library.ProblemEntities.Point, int>(5, 2, new List<Library.ProblemEntities.Point>());
+            algorithm = new AlgorithmEngine<Library.ProblemEntities.Point, int>(5, 2, trainSet);
+            trackBar1_Scroll(this, EventArgs.Empty);
+            trackBar2_Scroll(this, EventArgs.Empty);
             graphManager = new GraphManager.GraphManager(zedGraphControl1);
+
+            GraphPane myPane = zedGraphControl1.GraphPane;
+
+            // Set the Titles
+            myPane.Title.Text = "K-nearest neighbours";
+            myPane.XAxis.Title.Text = "X Axis";
+            myPane.YAxis.Title.Text = "Y Axis";
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -40,6 +51,20 @@ namespace KNN.WindowApp
             else
                 algorithm.P = trackBar2.Value;
             PLabel.Text = $"P = {algorithm.P.ToString()}";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            graphManager.UpdateGraph(algorithm.KnnRun(otherSet));
+        }
+
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
+            var res =saveFileDialog1.ShowDialog();
+            if(res == DialogResult.OK)
+            {
+                zedGraphControl1.MasterPane.GetImage().Save(saveFileDialog1.FileName);
+            }
         }
     }
 }
