@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KNN.Library.ProblemEntities
+namespace KNN.Solver.ProblemEntities
 {
 	public class Point: IMetricable<Point>, IClassifiable<int>
 	{
@@ -13,30 +13,30 @@ namespace KNN.Library.ProblemEntities
 		{
 			get; set;
 		}
-		public float X
+		public double X
 		{
 			get; private set;
 		}
-		public float Y
+		public double Y
 		{
 			get; private set;
 		}
 
-		public Point(float x, float y)
+		public Point(double x, double y, int cls = -1)
 		{
 			X = x;
 			Y = y;
-			Classifier = -1;
+			Classifier = cls;
 		}
 
-		public float NormP(Point other, double p)
+		public double NormP(Point other, double p)
 		{
 			if (p == double.PositiveInfinity)
 				return Math.Max(Math.Abs(X - other.X), Math.Abs(Y - other.Y));
 
-			float res = (float)Math.Pow(Math.Abs(X - other.X), p);
-			res += (float)Math.Pow(Math.Abs(Y - other.Y), p);
-			return (float)Math.Pow(res, 1.0 / p);
+			double res = (double)Math.Pow(Math.Abs(X - other.X), p);
+			res += (double)Math.Pow(Math.Abs(Y - other.Y), p);
+			return (double)Math.Pow(res, 1.0 / p);
 		}
 	}
 }

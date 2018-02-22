@@ -66,9 +66,9 @@ namespace KNN.Library
 	
 		private List<T> GetKNeighbors(T element)
 		{
-			SortedList<float, T> sortedList = new SortedList<float, T>();
+			SortedList<double, T> sortedList = new SortedList<double, T>();
 			foreach (var item in TrainSet) {
-				float distance = item.NormP(element, P);
+				double distance = item.NormP(element, P);
 				if (sortedList.Count < K)
 					sortedList.Add(distance, item);
 				else if (sortedList.Max().Key > distance) {

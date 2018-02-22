@@ -43,8 +43,6 @@
     <Compile Include="AlgorithmEngine.cs" />
     <Compile Include="Base\IClassifiable.cs" />
     <Compile Include="Base\IMetricable.cs" />
-    <Compile Include="IO\TrainDataLoader.cs" />
-    <Compile Include="ProblemEntities\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
