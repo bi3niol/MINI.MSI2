@@ -49,7 +49,7 @@ namespace KNN.Library
             foreach (var item in list)
             {
                 var key = item.Classifier;
-                counter[key]++;
+                counter[key]++;  //check if it not throws exception
                 if (count < counter[key])
                 {
                     res = key;
