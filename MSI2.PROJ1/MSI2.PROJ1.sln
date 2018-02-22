@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.Library", "KNN.Library\KNN.Library.csproj", "{1C41BC0D-0C50-488A-949F-B3D491C5D655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.Project.Problem", "KNN.Project.Problem\KNN.Project.Problem.csproj", "{943EDCFD-D026-4DD9-9CB3-96F8ACB636EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.ProblemSolver", "KNN.ProblemSolver\KNN.ProblemSolver.csproj", "{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{1C41BC0D-0C50-488A-949F-B3D491C5D655}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C41BC0D-0C50-488A-949F-B3D491C5D655}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C41BC0D-0C50-488A-949F-B3D491C5D655}.Release|Any CPU.Build.0 = Release|Any CPU
-		{943EDCFD-D026-4DD9-9CB3-96F8ACB636EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{943EDCFD-D026-4DD9-9CB3-96F8ACB636EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{943EDCFD-D026-4DD9-9CB3-96F8ACB636EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{943EDCFD-D026-4DD9-9CB3-96F8ACB636EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
