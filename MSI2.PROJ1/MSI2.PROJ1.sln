@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.Library", "KNN.Library\KNN.Library.csproj", "{1C41BC0D-0C50-488A-949F-B3D491C5D655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.ProblemSolver", "KNN.ProblemSolver\KNN.ProblemSolver.csproj", "{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.Solver", "KNN.ProblemSolver\KNN.Solver.csproj", "{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.WindowApp", "KNN.WindowApp\KNN.WindowApp.csproj", "{B6B9AA0D-30FD-4FBB-B3A5-A8FD310B8CB7}"
 EndProject
