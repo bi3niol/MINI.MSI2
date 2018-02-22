@@ -30,7 +30,7 @@ namespace KNN.Library
         /// </summary>
         public int K
 		{
-			get; private set;
+			get; set;
 		}
 
 		public AlgorithmEngine(int k, double p, List<T> trainSet, List<T> testSet)
@@ -89,6 +89,5 @@ namespace KNN.Library
             }
 			return sortedList.Values.ToList();
 		}
-
-    }
+	}
 }
