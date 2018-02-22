@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KNN.Project.Problem
+namespace KNN.Library.ProblemEntities
 {
 	public class Point: IMetricable<Point>, IClassifiable<int>
 	{
