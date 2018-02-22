@@ -14,18 +14,18 @@ namespace KNN.Library
 		/// </summary>
 		public double P
 		{
-			get; private set;
+			get; set;
 		}
 		public List<T> TrainSet
 		{
-			get; private set;
+			get; set;
 		}
 		/// <summary>
 		/// number of neighbors
 		/// </summary>
 		public int K
 		{
-			get; private set;
+			get; set;
 		}
 
 		public AlgorithmEngine(int k, double p, List<T> trainSet)
