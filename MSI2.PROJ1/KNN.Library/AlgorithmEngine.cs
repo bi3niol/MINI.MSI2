@@ -20,27 +20,37 @@ namespace KNN.Library
 		{
 			get; private set;
 		}
-		/// <summary>
-		/// number of neighbors
-		/// </summary>
-		public int K
+
+        public List<T> TestSet
+        {
+            get; private set;
+        }
+        /// <summary>
+        /// number of neighbors
+        /// </summary>
+        public int K
 		{
 			get; private set;
 		}
 
-		public AlgorithmEngine(int k, double p, List<T> trainSet)
+		public AlgorithmEngine(int k, double p, List<T> trainSet, List<T> testSet)
 		{
 			K = k;
 			P = p;
 			TrainSet = trainSet;
+            TestSet = testSet;
 		}
 
-		public List<T> KnnRun(List<T> testData)
+		public List<Tuple<T, TClassifier>> KnnRun()
 		{
-			foreach (var item in testData)
-				item.Classifier = GetMostCommonClassifier(GetKNeighbors(item));
+            List<Tuple<T, TClassifier>> results = new List<Tuple<T, TClassifier>>();
 
-			return testData;
+            foreach (var item in TestSet) {
+                Console.WriteLine("Trwa obliczanie...");
+                results.Add(new Tuple<T, TClassifier>(item, GetMostCommonClassifier(GetKNeighbors(item))));
+            }
+
+            return results;
 		}
 
 		private TClassifier GetMostCommonClassifier(List<T> list)
@@ -66,18 +76,19 @@ namespace KNN.Library
 	
 		private List<T> GetKNeighbors(T element)
 		{
-			SortedList<double, T> sortedList = new SortedList<double, T>();
+            SortedList<double, T> sortedList = new SortedList<double, T>(Comparer<double>.Default);
 			foreach (var item in TrainSet) {
 				double distance = item.NormP(element, P);
 				if (sortedList.Count < K)
 					sortedList.Add(distance, item);
-				else if (sortedList.Max().Key > distance) {
-					sortedList.Remove(sortedList.Max().Key);
-					sortedList.Add(distance, item);
-				}
-			}
+				else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
+                {
+                    sortedList.Remove(sortedList.ElementAt(sortedList.Count - 1).Key);
+                    sortedList.Add(distance, item);
+                }
+            }
 			return sortedList.Values.ToList();
 		}
 
-	}
+    }
 }

@@ -13,39 +13,45 @@ namespace KNN.Solver
 	{
 		static void Main(string[] args)
 		{
-            string filePath;
+            string trainFilePath;
+            string testFilePath;
             int k;
-            if (!CheckAndResolveArgs(args, out filePath, out k))
+            if (!CheckAndResolveArgs(args, out trainFilePath, out testFilePath, out k))
                 return;
-            TrainDataLoader dataLoader = new TrainDataLoader(filePath);
-			List<Point> trainData = dataLoader.TryLoadData();
-            if (trainData == null) {
+            TrainDataLoader dataLoader = new TrainDataLoader();
+			List<Point> trainData = dataLoader.TryLoadData(trainFilePath);
+            List<Point> testData = dataLoader.TryLoadData(testFilePath);
+            if (trainData == null || testData == null) {
                 return;
             }
-            AlgorithmEngine<Point, int> engine = new AlgorithmEngine<Point, int>(k, 2, trainData);
-            
+            AlgorithmEngine<Point, int> engine = new AlgorithmEngine<Point, int>(k, 2, trainData, testData);
+            var results = engine.KnnRun();
+            PressAnyKey(false);
 		}
 
-        private static bool CheckAndResolveArgs(string[] args, out string filePath, out int k) {
-            filePath = string.Empty;
+        private static bool CheckAndResolveArgs(string[] args, out string trainFilePath, out string testFilePath, out int k) {
+            trainFilePath = string.Empty;
+            testFilePath = string.Empty;
             k = -1;
 
-            if (args.Length != 2) {
+            if (args.Length != 3) {
                 PressAnyKey();
                 return false;
             }
-            filePath = args[0];
-            if (!int.TryParse(args[1], out k)) {
+            trainFilePath = args[0];
+            testFilePath = args[1];
+            if (!int.TryParse(args[2], out k)) {
                 PressAnyKey();
                 return false;
             }
             return true;
         }
 
-        private static void PressAnyKey()
+        private static void PressAnyKey(bool warn = true)
         {
 #if DEBUG
-            Console.WriteLine("Nieprawidłowe wywołanie.\nKNN.Solver <ścieżka_do_pliku> <k>");
+            if(warn)
+                Console.WriteLine("Nieprawidłowe wywołanie.\nKNN.Solver <train_file_path> <test_file_path> <k>");
             Console.WriteLine("Naciśnij ENTER aby zakończyć..");
             Console.Read();
 #endif

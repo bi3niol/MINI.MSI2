@@ -12,14 +12,7 @@ namespace KNN.Solver.IO
 {
 	public class TrainDataLoader
 	{
-		private string filePath;
-
-		public TrainDataLoader(string filePath)
-		{
-			this.filePath = filePath;
-		}
-
-		public List<Point> TryLoadData()
+		public List<Point> TryLoadData(string filePath)
 		{
 			List<Point> trainData = new List<Point>();
             try {
