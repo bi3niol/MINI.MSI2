@@ -45,35 +45,25 @@ namespace KNN.Library
 
 		private TClassifier GetMostCommonClassifier(List<T> list)
 		{
-			if (list.Count > 0)
-				if (list[0].Classifier is ValueType)
-					return GetMostCommonClassifier_ValueType(list);
-
-			return GetMostCommonClassifier_RefType(list);
-		}
-		private TClassifier GetMostCommonClassifier_RefType(List<T> list)
-		{
-			throw new NotImplementedException();
-			return default(TClassifier);
-		}
-		private TClassifier GetMostCommonClassifier_ValueType(List<T> list)
-		{
-			Dictionary<TClassifier, int> counter = new Dictionary<TClassifier, int>();
+			Dictionary<TClassifier, int> counters = new Dictionary<TClassifier, int>();
 			TClassifier res = default(TClassifier);
 			int count = 0;
 			foreach (var item in list)
 			{
 				var key = item.Classifier;
-				counter[key]++;  //check if it not throws exception
-				if (count < counter[key])
+				if (counters.ContainsKey(key))
+					counters[key]++;  //check if it not throws exception
+				else
+					counters.Add(key, 1);
+				if (count < counters[key])
 				{
 					res = key;
-					count = counter[key];
+					count = counters[key];
 				}
 			}
-
 			return res;
 		}
+	
 		private List<T> GetKNeighbors(T element)
 		{
 			SortedList<float, T> sortedList = new SortedList<float, T>();
