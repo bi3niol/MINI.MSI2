@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.Library", "KNN.Library\KNN.Library.csproj", "{1C41BC0D-0C50-488A-949F-B3D491C5D655}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.ProblemSolver", "KNN.ProblemSolver\KNN.ProblemSolver.csproj", "{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNN.WindowApp", "KNN.WindowApp\KNN.WindowApp.csproj", "{B6B9AA0D-30FD-4FBB-B3A5-A8FD310B8CB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF5DE2F9-93C1-42C0-8CF3-C6E5A459905E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B9AA0D-30FD-4FBB-B3A5-A8FD310B8CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B9AA0D-30FD-4FBB-B3A5-A8FD310B8CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B9AA0D-30FD-4FBB-B3A5-A8FD310B8CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B9AA0D-30FD-4FBB-B3A5-A8FD310B8CB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

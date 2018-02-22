@@ -78,6 +78,5 @@ namespace KNN.Library
 			}
 			return sortedList.Values.ToList();
 		}
-
 	}
 }
