@@ -1,11 +1,11 @@
-﻿using System;
+﻿using KNN.Library;
+using KNN.Library.IO;
+using KNN.Library.ProblemEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KNN.Library;
-using KNN.Library.IO;
-using KNN.Library.ProblemEntities;
 
 namespace KNN.ProblemSolver
 {
@@ -18,7 +18,8 @@ namespace KNN.ProblemSolver
 			string filePath = string.Empty;
 			TrainDataLoader dataLoader = new TrainDataLoader(filePath);
 			List<Point> trainData = dataLoader.LoadData();
-			//AlgorithmEngine engine = new AlgorithmEngine<Point, >
+            AlgorithmEngine<Point, int> engine = new AlgorithmEngine<Point, int>(k, 2, trainData);
+            
 		}
 	}
 }

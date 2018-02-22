@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KNN.Library\KNN.Library.csproj">
+      <Project>{1C41BC0D-0C50-488A-949F-B3D491C5D655}</Project>
+      <Name>KNN.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
