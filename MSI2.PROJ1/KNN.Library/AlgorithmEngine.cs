@@ -58,8 +58,7 @@ namespace KNN.Library
 
         public List<T> KnnRun(List<T> testSet)
         {
-            foreach (var item in testSet)
-                item.Classifier = GetMostCommonClassifier(GetKNeighbors(item));
+            testSet.AsParallel().ForAll(x => { x.Classifier = GetMostCommonClassifier(GetKNeighbors(x)); });
 
             return testSet;
         }
