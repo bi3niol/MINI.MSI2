@@ -12,7 +12,7 @@ namespace KNN.Solver.IO
 {
 	public class TrainDataLoader
 	{
-		public List<Point> TryLoadData(string filePath)
+		public List<Point> LoadData(string filePath)
 		{
 			List<Point> trainData = new List<Point>();
             try {
@@ -29,8 +29,7 @@ namespace KNN.Solver.IO
                         yRes = double.TryParse(csv.GetField<string>(1), NumberStyles.Any, CultureInfo.InvariantCulture, out y);
                         clsRes = int.TryParse(csv.GetField<string>(2), out cls);
                         if (!xRes || !yRes || !clsRes) {
-                            Console.WriteLine("Plik ma złą strukturę.");
-                            return null;
+                            throw new ArgumentException("Plik ma złą strukturę.");
                         }
                         trainData.Add(new Point(x, y, cls));
                     }
@@ -39,8 +38,7 @@ namespace KNN.Solver.IO
                 return trainData;
             }
             catch (Exception e) {
-                Console.WriteLine("Nie można otworzyć pliku.");
-                return null;
+                throw new FileLoadException("Nie można otworzyć pliku.");
             }
             
 		}

@@ -19,9 +19,15 @@ namespace KNN.Solver
             if (!CheckAndResolveArgs(args, out trainFilePath, out testFilePath, out k))
                 return;
             TrainDataLoader dataLoader = new TrainDataLoader();
-			List<Point> trainData = dataLoader.TryLoadData(trainFilePath);
-            List<Point> testData = dataLoader.TryLoadData(testFilePath);
-            if (trainData == null || testData == null) {
+            List<Point> trainData;
+            List<Point> testData;
+            try
+            {
+                trainData = dataLoader.LoadData(trainFilePath);
+                testData = dataLoader.LoadData(testFilePath);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
                 return;
             }
             AlgorithmEngine<Point, int> engine = new AlgorithmEngine<Point, int>(k, 2, trainData, testData);

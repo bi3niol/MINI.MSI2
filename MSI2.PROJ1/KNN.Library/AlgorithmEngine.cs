@@ -14,26 +14,24 @@ namespace KNN.Library
 		/// </summary>
 		public double P
 		{
-			get; set;
+			get; private set;
 		}
 		public List<T> TrainSet
 		{
-			get; set;
+			get; private set;
 		}
 
         public List<T> TestSet
         {
-            get; set;
+            get; private set;
         }
         /// <summary>
         /// number of neighbors
         /// </summary>
         public int K
 		{
-			get; set;
+			get; private set;
 		}
-
-        public AlgorithmEngine() { }
 
 		public AlgorithmEngine(int k, double p, List<T> trainSet, List<T> testSet)
 		{
@@ -56,11 +54,11 @@ namespace KNN.Library
             return results;
         }
 
-        public List<T> KnnRun(List<T> testSet)
+        public List<T> KnnRunParallel()
         {
-            testSet.AsParallel().ForAll(x => { x.Classifier = GetMostCommonClassifier(GetKNeighbors(x)); });
+            this.TestSet.AsParallel().ForAll(x => { x.Classifier = GetMostCommonClassifier(GetKNeighbors(x)); });
 
-            return testSet;
+            return this.TestSet;
         }
 
         private TClassifier GetMostCommonClassifier(List<T> list)

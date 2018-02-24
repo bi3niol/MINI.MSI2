@@ -29,20 +29,20 @@ namespace KNN.WindowApp.GraphManager
         }
         public void UpdateGraph(List<KNN.Solver.ProblemEntities.Point> points)
         {
-            Dictionary<int, PointPairList> class_point = new Dictionary<int, PointPairList>();
-            foreach (var point in points)
-                if (class_point.ContainsKey(point.Classifier))
-                    class_point[point.Classifier].Add(point.X,point.Y);
-                else
-                    class_point.Add(point.Classifier, new PointPairList( new double[]{ point.X },new double []{ point.Y}));
-            // get a reference to the GraphPane
-            GraphPane myPane = zedGraph.GraphPane;
-            myPane.CurveList.Clear();
-            foreach (var key in class_point.Keys)
-                myPane.AddCurve("Set " + key, class_point[key], colors[key % colors.Length],SymbolType.Circle).Line.IsVisible = false;
+            zedGraph.GraphPane.CurveList.Clear();
+            var groups = points.GroupBy((p) => { return p.Classifier; });
+            foreach (var group in groups)
+            {
+                var curve = zedGraph.GraphPane.AddCurve("Class " + group.Key, new PointPairList(), colors[group.Key % colors.Length], SymbolType.Circle);
+                curve.Line.IsVisible = false;
+                curve.Symbol.Fill = new Fill(curve.Color);
+                foreach (var point in group)
+                {
+                    curve.AddPoint(point.X, point.Y);
+                }
 
-            zedGraph.AxisChange();
-            zedGraph.Invalidate();
+            }
+            // zedGraph.AxisChange();
         }
     }
 }
