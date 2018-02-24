@@ -38,6 +38,10 @@ namespace KNN.WindowApp
             graphPane.Title.Text = "K Nearest Neighbours";
             graphPane.XAxis.Title.Text = "X axis";
             graphPane.YAxis.Title.Text = "Y axis";
+            graphPane.XAxis.Scale.MaxAuto = graphPane.XAxis.Scale.MinAuto = graphPane.YAxis.Scale.MaxAuto = graphPane.YAxis.Scale.MinAuto = true;
+            graphPane.XAxis.Scale.Min = graphPane.YAxis.Scale.Min = -1;
+            graphPane.XAxis.Scale.Max = graphPane.YAxis.Scale.Max = 1;
+ 
             updateControlsAvailibility(false);
         }
 
