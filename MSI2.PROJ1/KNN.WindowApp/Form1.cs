@@ -13,20 +13,20 @@ using ZedGraph;
 
 namespace KNN.WindowApp
 {
-    public partial class Form1 : Form
+    public partial class KNN_Window : Form
     {
         private GraphManager.GraphManager graphManager;
-        private AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int> algorithm;
-        private List<KNN.Solver.ProblemEntities.Point> treinSet;
-        private List<KNN.Solver.ProblemEntities.Point> otherSet;
-        public Form1()
+        private AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int> algorithmEngine;
+        private List<KNN.Solver.ProblemEntities.Point> trainData;
+        private List<KNN.Solver.ProblemEntities.Point> testData;
+        public KNN_Window()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            algorithm = new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>();
+            algorithmEngine = new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>();
             trackBar1_Scroll(this, EventArgs.Empty);
             trackBar2_Scroll(this, EventArgs.Empty);
             graphManager = new GraphManager.GraphManager(zedGraphControl1);
@@ -34,69 +34,69 @@ namespace KNN.WindowApp
             GraphPane myPane = zedGraphControl1.GraphPane;
 
             // Set the Titles
-            myPane.Title.Text = "K-nearest neighbours";
-            myPane.XAxis.Title.Text = "X Axis";
-            myPane.YAxis.Title.Text = "Y Axis";
+            myPane.Title.Text = "K-Nearest Neighbours";
+            myPane.XAxis.Title.Text = "X axis";
+            myPane.YAxis.Title.Text = "Y axis";
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            algorithm.K = trackBar1.Value;
-            KLabel.Text = $"K = {algorithm.K}";
+            algorithmEngine.K = trackBar1.Value;
+            KLabel.Text = $"K = {algorithmEngine.K}";
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
             if (trackBar2.Maximum == trackBar2.Value)
-                algorithm.P = double.PositiveInfinity;
+                algorithmEngine.P = double.PositiveInfinity;
             else
-                algorithm.P = trackBar2.Value;
-            PLabel.Text = $"P = {algorithm.P.ToString()}";
+                algorithmEngine.P = trackBar2.Value;
+            PLabel.Text = $"P = {algorithmEngine.P.ToString()}";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void RunBtn_Click(object sender, EventArgs e)
         {
             bool canRun = true;
-            string msg = "";
-            if (algorithm.TrainSet == null)
+            StringBuilder msg = new StringBuilder();
+            if (algorithmEngine.TrainSet == null)
             {
-                msg = "Train set is null";
+                msg.AppendLine("-Train data is required.");
                 canRun = false;
             }
-            if (otherSet == null)
+            if (testData == null)
             {
-                msg += "\n Test set is null";
+                msg.AppendLine("-Test data is required.");
                 canRun = false;
             }
             if (canRun)
-                graphManager.UpdateGraph(algorithm.KnnRun(otherSet));
+                graphManager.UpdateGraph(algorithmEngine.KnnRun(testData));
             else
-                MessageBox.Show(msg);
+                MessageBox.Show(msg.ToString(), "Warnings:");
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            var res = saveFileDialog1.ShowDialog();
+            var res = saveFileDialog.ShowDialog();
             if (res == DialogResult.OK)
             {
-                zedGraphControl1.MasterPane.GetImage().Save(saveFileDialog1.FileName);
+                zedGraphControl1.MasterPane.GetImage().Save(saveFileDialog.FileName);
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void loadTrainDataBtn_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                treinSet = new TrainDataLoader().TryLoadData(openFileDialog1.FileName);
-                algorithm.TrainSet = treinSet;
+                trainData = new TrainDataLoader().TryLoadData(openFileDialog.FileName);
+                algorithmEngine.TrainSet = trainData;
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void loadTestDataBtn_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                otherSet = new TrainDataLoader().TryLoadData(openFileDialog1.FileName);
+                testData = new TrainDataLoader().TryLoadData(openFileDialog.FileName);
             }
         }
     }
