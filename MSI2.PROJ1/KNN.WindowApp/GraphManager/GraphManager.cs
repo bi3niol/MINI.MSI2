@@ -39,9 +39,10 @@ namespace KNN.WindowApp.GraphManager
             GraphPane myPane = zedGraph.GraphPane;
             myPane.CurveList.Clear();
             foreach (var key in class_point.Keys)
-                myPane.AddCurve("Set " + key, class_point[key], colors[key % colors.Length]).Line.IsVisible = false;
+                myPane.AddCurve("Set " + key, class_point[key], colors[key % colors.Length],SymbolType.Circle).Line.IsVisible = false;
 
             zedGraph.AxisChange();
+            zedGraph.Invalidate();
         }
     }
 }
