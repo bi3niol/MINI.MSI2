@@ -42,7 +42,10 @@ namespace KNN.WindowApp.GraphManager
                 }
 
             }
-            // zedGraph.AxisChange();
+            zedGraph.GraphPane.XAxis.Scale.Min = zedGraph.GraphPane.YAxis.Scale.Min = -1;
+            zedGraph.GraphPane.XAxis.Scale.Max = zedGraph.GraphPane.YAxis.Scale.Max = 1;
+
+            zedGraph.Invalidate();
         }
     }
 }
