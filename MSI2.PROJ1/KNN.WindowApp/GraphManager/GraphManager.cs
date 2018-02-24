@@ -42,7 +42,8 @@ namespace KNN.WindowApp.GraphManager
                 }
 
             }
-            // zedGraph.AxisChange();
+            zedGraph.AxisChange();
+            zedGraph.Invalidate();
         }
     }
 }
