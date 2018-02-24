@@ -37,6 +37,7 @@ namespace KNN.WindowApp
             graphPane.Title.Text = "K Nearest Neighbours";
             graphPane.XAxis.Title.Text = "X axis";
             graphPane.YAxis.Title.Text = "Y axis";
+            setExecuteBtnsAvailibility();
         }
 
         private void kTrackBar_Scroll(object sender, EventArgs e)
@@ -87,14 +88,17 @@ namespace KNN.WindowApp
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                try {
+                try
+                {
                     trainData = new TrainDataLoader().LoadData(openFileDialog.FileName);
-                    this.trainDataLabel.Text = openFileDialog.FileName;
+                    this.trainDataLabel.Text = openFileDialog.FileName.Split(new char[] { '\\' }).Last();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                    this.trainDataLabel.Text = string.Empty;
+                }
+                finally {
+                    setExecuteBtnsAvailibility();
                 }
             }
         }
@@ -105,13 +109,19 @@ namespace KNN.WindowApp
             {
                 try {
                     testData = new TrainDataLoader().LoadData(openFileDialog.FileName);
-                    this.testDataLabel.Text = openFileDialog.FileName;
+                    this.testDataLabel.Text = openFileDialog.FileName.Split(new char[] { '\\' }).Last();
                 }
                 catch (Exception ex) {
                     MessageBox.Show(ex.Message);
-                    this.testDataLabel.Text = string.Empty;
+                }
+                finally{
+                    setExecuteBtnsAvailibility();
                 }
             }
+        }
+
+        private void setExecuteBtnsAvailibility() {
+            this.runBtn.Enabled = this.SaveBtn.Enabled = this.trainData != null && this.testData != null;
         }
     }
 }

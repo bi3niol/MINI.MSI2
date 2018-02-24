@@ -64,6 +64,7 @@
             // 
             this.kTrackBar.Location = new System.Drawing.Point(774, 61);
             this.kTrackBar.Minimum = 1;
+            this.kTrackBar.Maximum = 20;
             this.kTrackBar.Name = "trackBar1";
             this.kTrackBar.Size = new System.Drawing.Size(104, 45);
             this.kTrackBar.TabIndex = 1;
@@ -84,7 +85,7 @@
             // 
             this.pTrackBar.Location = new System.Drawing.Point(774, 112);
             this.pTrackBar.Maximum = 20;
-            this.pTrackBar.Minimum = 2;
+            this.pTrackBar.Minimum = 1;
             this.pTrackBar.Name = "trackBar2";
             this.pTrackBar.Size = new System.Drawing.Size(104, 45);
             this.pTrackBar.TabIndex = 1;
@@ -146,7 +147,6 @@
             this.trainDataLabel.AutoSize = true;
             this.trainDataLabel.Location = new System.Drawing.Point(680, 204);
             this.trainDataLabel.Name = "label1";
-            this.trainDataLabel.Size = new System.Drawing.Size(35, 13);
             this.trainDataLabel.TabIndex = 7;
             this.trainDataLabel.Text = string.Empty;
             // 
@@ -155,7 +155,6 @@
             this.testDataLabel.AutoSize = true;
             this.testDataLabel.Location = new System.Drawing.Point(683, 263);
             this.testDataLabel.Name = "label2";
-            this.testDataLabel.Size = new System.Drawing.Size(35, 13);
             this.testDataLabel.TabIndex = 8;
             this.testDataLabel.Text = string.Empty;
             // 
