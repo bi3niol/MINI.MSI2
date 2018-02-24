@@ -20,6 +20,7 @@ namespace KNN.WindowApp
         private List<KNN.Solver.ProblemEntities.Point> testData;
         private int k;
         private double p;
+
         public KNN_Window()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace KNN.WindowApp
             graphPane.Title.Text = "K Nearest Neighbours";
             graphPane.XAxis.Title.Text = "X axis";
             graphPane.YAxis.Title.Text = "Y axis";
-            setExecuteBtnsAvailibility();
+            updateControlsAvailibility(false);
         }
 
         private void kTrackBar_Scroll(object sender, EventArgs e)
@@ -69,8 +70,12 @@ namespace KNN.WindowApp
                 msg.AppendLine("-Test data is required.");
                 canRun = false;
             }
-            if (canRun)
-                graphManager.UpdateGraph(new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>(k, p, trainData, testData).KnnRunParallel());
+            if (canRun) {
+                updateControlsAvailibility(true);
+                List<Solver.ProblemEntities.Point> res = new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>(k, p, trainData, testData).KnnRunParallel();
+                graphManager.UpdateGraph(res);
+                updateControlsAvailibility(false);
+            }
             else
                 MessageBox.Show(msg.ToString(), "Warnings:");
         }
@@ -90,6 +95,7 @@ namespace KNN.WindowApp
             {
                 try
                 {
+                    updateControlsAvailibility(true);
                     trainData = new TrainDataLoader().LoadData(openFileDialog.FileName);
                     this.trainDataLabel.Text = openFileDialog.FileName.Split(new char[] { '\\' }).Last();
                 }
@@ -98,7 +104,7 @@ namespace KNN.WindowApp
                     MessageBox.Show(ex.Message);
                 }
                 finally {
-                    setExecuteBtnsAvailibility();
+                    updateControlsAvailibility(false);
                 }
             }
         }
@@ -108,6 +114,7 @@ namespace KNN.WindowApp
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try {
+                    updateControlsAvailibility(true);
                     testData = new TrainDataLoader().LoadData(openFileDialog.FileName);
                     this.testDataLabel.Text = openFileDialog.FileName.Split(new char[] { '\\' }).Last();
                 }
@@ -115,13 +122,15 @@ namespace KNN.WindowApp
                     MessageBox.Show(ex.Message);
                 }
                 finally{
-                    setExecuteBtnsAvailibility();
+                    updateControlsAvailibility(false);
                 }
             }
         }
 
-        private void setExecuteBtnsAvailibility() {
-            this.runBtn.Enabled = this.SaveBtn.Enabled = this.trainData != null && this.testData != null;
+        private void updateControlsAvailibility(bool isWorking) {
+            this.Cursor = isWorking ? Cursors.WaitCursor : Cursors.Default;
+            this.runBtn.Enabled = this.SaveBtn.Enabled = !isWorking && this.trainData != null && this.testData != null;
+            this.loadTestDataBtn.Enabled = this.loadTrainDataBtn.Enabled = !isWorking;
         }
     }
 }
