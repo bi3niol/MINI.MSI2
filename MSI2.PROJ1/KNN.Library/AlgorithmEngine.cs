@@ -11,26 +11,30 @@ namespace KNN.Library
 	{
 		/// <summary>
 		/// indicates norm
+        /// PUBLIC SET
 		/// </summary>
 		public double P
 		{
-			get; private set;
+			get; set;
 		}
 		public List<T> TrainSet
 		{
 			get; private set;
 		}
-
+        /// <summary>
+        /// PUBLIC SET
+        /// </summary>
         public List<T> TestSet
         {
-            get; private set;
+            get; set;
         }
         /// <summary>
         /// number of neighbors
+        /// PUBLIC SET
         /// </summary>
         public int K
 		{
-			get; private set;
+			get; set;
 		}
 
 		public AlgorithmEngine(int k, double p, List<T> trainSet, List<T> testSet)
