@@ -30,7 +30,7 @@ namespace KNN.WindowApp.GraphManager
         public void UpdateGraph(List<KNN.Solver.ProblemEntities.Point> points)
         {
             zedGraph.GraphPane.CurveList.Clear();
-            var groups = points.GroupBy((p) => { return p.Classifier; });
+            var groups = points.GroupBy((p) => { return p.Cluster; });
             foreach (var group in groups)
             {
                 var curve = zedGraph.GraphPane.AddCurve("Class " + group.Key, new PointPairList(), colors[group.Key % colors.Length], SymbolType.Circle);

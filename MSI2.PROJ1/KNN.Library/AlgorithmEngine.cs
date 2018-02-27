@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KNN.Library
 {
-	public sealed class AlgorithmEngine<T, TClassifier> where T : IMetricable<T>, IClassifiable<TClassifier>
+	public sealed class AlgorithmEngine<T, TCluster> where T : IMetricable<T>, IClusterable<TCluster>
 	{
 		/// <summary>
 		/// indicates norm
@@ -45,36 +45,24 @@ namespace KNN.Library
             TestSet = testSet;
 		}
 
-        public List<Tuple<T, TClassifier>> KnnRun()
-        {
-            List<Tuple<T, TClassifier>> results = new List<Tuple<T, TClassifier>>();
-
-            foreach (var item in TestSet)
-            {
-                Console.WriteLine("Trwa obliczanie...");
-                results.Add(new Tuple<T, TClassifier>(item, GetMostCommonClassifier(GetKNeighbors(item))));
-            }
-
-            return results;
-        }
 
         public List<T> KnnRunParallel()
         {
-            this.TestSet.AsParallel().ForAll(x => { x.Classifier = GetMostCommonClassifier(GetKNeighbors(x)); });
+            this.TestSet.AsParallel().ForAll(x => { x.Cluster = GetMostCommonClassifier(GetKNeighbors(x)); });
 
             return this.TestSet;
         }
 
-        private TClassifier GetMostCommonClassifier(List<T> list)
+        private TCluster GetMostCommonClassifier(List<T> list)
 		{
-			Dictionary<TClassifier, int> counters = new Dictionary<TClassifier, int>();
-			TClassifier res = default(TClassifier);
+			Dictionary<TCluster, int> counters = new Dictionary<TCluster, int>();
+			TCluster res = default(TCluster);
 			int count = 0;
 			foreach (var item in list)
 			{
-				var key = item.Classifier;
+				var key = item.Cluster;
 				if (counters.ContainsKey(key))
-					counters[key]++;  //check if it not throws exception
+					counters[key]++;
 				else
 					counters.Add(key, 1);
 				if (count < counters[key])
@@ -89,17 +77,17 @@ namespace KNN.Library
 		private List<T> GetKNeighbors(T element)
 		{
             SortedList<double, T> sortedList = new SortedList<double, T>(Comparer<double>.Default);
-			foreach (var item in TrainSet) {
-				double distance = item.NormP(element, P);
-				if (sortedList.Count < K)
-					sortedList.Add(distance, item);
-				else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
+            foreach (var item in TrainSet) {
+                double distance = item.NormP(element, P);
+                if (sortedList.Count < K)
+                    sortedList.Add(distance, item);
+                else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
                 {
                     sortedList.RemoveAt(sortedList.Count - 1);
                     sortedList.Add(distance, item);
                 }
             }
-			return sortedList.Values.ToList();
-		}
-	}
+            return sortedList.Values.ToList();
+        }
+    }
 }

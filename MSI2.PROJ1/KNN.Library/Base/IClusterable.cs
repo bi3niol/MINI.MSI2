@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace KNN.Library.Base
 {
-    public interface IClassifiable<T>
+    public interface IClusterable<T>
     {
-        T Classifier { get; set; }
+        T Cluster { get; set; }
     }
 }

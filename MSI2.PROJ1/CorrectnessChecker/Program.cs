@@ -34,7 +34,7 @@ namespace CorrectnessChecker
                     n = 5;
 
             TestSet = TestSet.TakeEverNth(n).Cast<Point>().ToList();
-            goodRes = TestSet.Select(x => x.Classifier).ToArray();
+            goodRes = TestSet.Select(x => x.Cluster).ToArray();
 
             test.GoodClassification = goodRes;
             var alg = new AlgorithmEngine<Point, int>(2, 2, TrainSet, TestSet);
@@ -47,27 +47,33 @@ namespace CorrectnessChecker
 
         private static void K_Test(AlgorithmEngine<Point, int> algorithm, string fileName)
         {
+            Console.WriteLine("Running K test...");
             StringBuilder content = new StringBuilder();
             content.AppendLine("K;%");
             for (int k = 2; k < 20; k += 2)
             {
+                Console.WriteLine($"k={k}...");
                 algorithm.K = k;
                 content.AppendLine($"{k};{test.RunTest(algorithm.KnnRunParallel())}");
             }
+            Console.WriteLine("Saving results to file...");
             File.WriteAllText("K_"+fileName, content.ToString());
         }
 
         private static void P_Test(AlgorithmEngine<Point, int> algorithm, string fileName)
         {
             StringBuilder content = new StringBuilder();
+            Console.WriteLine("Running P test...");
             content.AppendLine("P;%");
-            for (int k = 2; k < 6; k += 1)
+            for (int p = 2; p < 6; p++)
             {
-                algorithm.P = k;
-                content.AppendLine($"{k};{test.RunTest(algorithm.KnnRunParallel())}");
+                Console.WriteLine($"p={p}...");
+                algorithm.P = p;
+                content.AppendLine($"{p};{test.RunTest(algorithm.KnnRunParallel())}");
             }
             algorithm.P = double.PositiveInfinity;
             content.AppendLine($"{algorithm.P};{test.RunTest(algorithm.KnnRunParallel())}");
+            Console.WriteLine("Saving results to file...");
             File.WriteAllText("P_"+fileName, content.ToString());
         }
     }
