@@ -95,7 +95,7 @@ namespace KNN.Library
         {
             get
             {
-                return new List<T>(this.tab);
+                return this.tab.Take(Count).ToList();
             }
         }
     } 
