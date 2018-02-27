@@ -76,18 +76,32 @@ namespace KNN.Library
 	
 		private List<T> GetKNeighbors(T element)
 		{
-            SortedList<double, T> sortedList = new SortedList<double, T>(Comparer<double>.Default);
-            foreach (var item in TrainSet) {
+            PriorityQueue<Tuple<double, T>> queue = new PriorityQueue<Tuple<double, T>>();
+            foreach (var item in TrainSet)
+            {
                 double distance = item.NormP(element, P);
-                if (sortedList.Count < K)
-                    sortedList.Add(distance, item);
-                else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
+                if (queue.Count < K)
+                    queue.Put(new Tuple<double, T>(distance, item));
+                else if (queue.Peek().Item1 > distance)
                 {
-                    sortedList.RemoveAt(sortedList.Count - 1);
-                    sortedList.Add(distance, item);
+                    queue.Get();
+                    queue.Put(new Tuple<double, T>(distance, item));
                 }
             }
-            return sortedList.Values.ToList();
+            return queue.Items.Select(t => t.Item2).ToList();
+
+            //SortedList<double, T> sortedList = new SortedList<double, T>(Comparer<double>.Default);
+            //foreach (var item in TrainSet) {
+            //    double distance = item.NormP(element, P);
+            //    if (sortedList.Count < K)
+            //        sortedList.Add(distance, item);
+            //    else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
+            //    {
+            //        sortedList.RemoveAt(sortedList.Count - 1);
+            //        sortedList.Add(distance, item);
+            //    }
+            //}
+            //return sortedList.Values.ToList();
         }
     }
 }
