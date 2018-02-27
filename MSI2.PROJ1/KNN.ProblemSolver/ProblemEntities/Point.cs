@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace KNN.Solver.ProblemEntities
 {
-	public class Point: IMetricable<Point>, IClassifiable<int>
+	public class Point: IMetricable<Point>, IClusterable<int>
 	{
-		public int Classifier
+		public int Cluster
 		{
 			get; set;
 		}
@@ -26,7 +26,7 @@ namespace KNN.Solver.ProblemEntities
 		{
 			X = x;
 			Y = y;
-			Classifier = cls;
+			Cluster = cls;
 		}
 
 		public double NormP(Point other, double p)
@@ -34,9 +34,9 @@ namespace KNN.Solver.ProblemEntities
 			if (p == double.PositiveInfinity)
 				return Math.Max(Math.Abs(X - other.X), Math.Abs(Y - other.Y));
 
-			double res = (double)Math.Pow(Math.Abs(X - other.X), p);
-			res += (double)Math.Pow(Math.Abs(Y - other.Y), p);
-			return (double)Math.Pow(res, 1.0 / p);
+			double res = Math.Pow(Math.Abs(X - other.X), p);
+			res += Math.Pow(Math.Abs(Y - other.Y), p);
+			return Math.Pow(res, 1.0d / p);
 		}
 	}
 }

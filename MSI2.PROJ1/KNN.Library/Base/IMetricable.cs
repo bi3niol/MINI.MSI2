@@ -11,7 +11,7 @@ namespace KNN.Library.Base
         /// <summary>
         /// </summary>
         /// <param name="other"></param>
-        /// <param name="p">norm (double.PositiveInfinity means infinity form)</param>
+        /// <param name="p">norm (double.PositiveInfinity means infinity norm)</param>
         /// <returns></returns>
         double NormP(T other, double p);
     }

@@ -34,7 +34,7 @@ namespace CorrectnessChecker
                     n = 5;
 
             TestSet = TestSet.TakeEverNth(n).Cast<Point>().ToList();
-            goodRes = TestSet.Select(x => x.Classifier).ToArray();
+            goodRes = TestSet.Select(x => x.Cluster).ToArray();
 
             test.GoodClassification = goodRes;
             var alg = new AlgorithmEngine<Point, int>(2, 2, TrainSet, TestSet);

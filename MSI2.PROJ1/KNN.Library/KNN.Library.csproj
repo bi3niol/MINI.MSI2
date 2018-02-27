@@ -41,9 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmEngine.cs" />
-    <Compile Include="Base\IClassifiable.cs" />
+    <Compile Include="Base\IClusterable.cs" />
     <Compile Include="Base\IMetricable.cs" />
     <Compile Include="Extensions\EnumerationExt.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CorrectnessTest.cs" />
   </ItemGroup>

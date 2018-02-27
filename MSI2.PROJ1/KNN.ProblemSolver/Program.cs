@@ -31,7 +31,7 @@ namespace KNN.Solver
                 return;
             }
             AlgorithmEngine<Point, int> engine = new AlgorithmEngine<Point, int>(k, 2, trainData, testData);
-            var results = engine.KnnRun();
+            var results = engine.KnnRunParallel();
             PressAnyKey(false);
 		}
 
