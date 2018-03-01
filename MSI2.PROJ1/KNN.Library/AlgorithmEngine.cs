@@ -76,7 +76,7 @@ namespace KNN.Library
 	
 		private List<T> GetKNeighbors(T element)
 		{
-            PriorityQueue<Tuple<double, T>> queue = new PriorityQueue<Tuple<double, T>>();
+            PriorityQueue<Tuple<double, T>> queue = new PriorityQueue<Tuple<double, T>>(K);
             foreach (var item in TrainSet)
             {
                 double distance = item.NormP(element, P);
