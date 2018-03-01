@@ -36,7 +36,7 @@ namespace KNN.Solver.ProblemEntities
 
 			double res = Math.Pow(Math.Abs(X - other.X), p);
 			res += Math.Pow(Math.Abs(Y - other.Y), p);
-            return res;//Math.Pow(res, 1.0d / p);
+            return res;
 		}
 	}
 }
