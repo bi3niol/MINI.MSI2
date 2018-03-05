@@ -39,9 +39,9 @@ namespace CorrectnessChecker
             test.GoodClassification = goodRes;
             var alg = new AlgorithmEngine<Point, int>(2, 2, TrainSet, TestSet);
 
-           // K_Test(alg, args[2]);
+            K_Test(alg, args[2]);
             alg.K = 6;
-           // P_Test(alg, args[2]);
+            P_Test(alg, args[2]);
             All_Test(alg, args[2]);
             Console.Read();
         }
@@ -72,9 +72,9 @@ namespace CorrectnessChecker
             Console.WriteLine("K_Test");
             content.AppendLine("K;%");
             double res;
-            for (int k = 2; k <= 22; k += 2)
+            for (int k = 2; k <= 30; k += 2)
             {
-                algorithm.K = k==22?200:k;
+                algorithm.K = k;
                 res = test.RunTest(algorithm.KnnRunParallel());
                 content.AppendLine($"{k};{res}");
                 Console.WriteLine($"{k};{res}");
