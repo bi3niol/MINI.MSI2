@@ -120,8 +120,8 @@ namespace KNN.WindowApp
             updateControlsAvailibility(true);
             graphManager.ClearGraph();
             List<Solver.ProblemEntities.Point> res = new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>(k, p, trainData, testData).KnnRunParallel();
-            graphManager.PrintClassifiedPoints(testData);
             graphManager.PrintTemplatePoints(trainData);
+            graphManager.PrintClassifiedPoints(testData);
             graphManager.UpdateGraph();
             updateControlsAvailibility(false);
         }

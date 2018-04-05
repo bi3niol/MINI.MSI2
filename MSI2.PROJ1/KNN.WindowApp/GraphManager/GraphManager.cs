@@ -13,25 +13,25 @@ namespace KNN.WindowApp.GraphManager
     {
         private static Color[] templateColors = new[]
         {
-            Color.Blue,
-            Color.DarkViolet,
             Color.DarkRed,
             Color.DarkGreen,
+            Color.DarkOrange,
+            Color.Blue,
+            Color.DarkViolet,
+            Color.Black,
             Color.Yellow,
-            Color.Silver,
             Color.Pink,
-            Color.DarkOrange
         };
         private static Color[] classifiedColors = new[]
        {
-            Color.LightBlue,
-            Color.Violet,
             Color.Red,
             Color.LightGreen,
-            Color.LightYellow,
+            Color.Orange,
+            Color.LightBlue,
+            Color.Violet,
             Color.LightGray,
+            Color.LightYellow,
             Color.LightPink,
-            Color.Orange
         };
         private ZedGraphControl zedGraph;
         public GraphManager(ZedGraphControl zedGraph)
@@ -65,7 +65,7 @@ namespace KNN.WindowApp.GraphManager
 
         private void PrintPoints(List<KNN.Solver.ProblemEntities.Point> points, float markerSize, bool isLabelVisible, Color[] colors)
         {
-            var groups = points.GroupBy((p) => { return p.Cluster; });
+            var groups = points.OrderBy(p=>p.Cluster).GroupBy((p) => { return p.Cluster; });
             foreach (var group in groups)
             {
                 var curve = zedGraph.GraphPane.AddCurve("Cluster " + group.Key, new PointPairList(), GetColor(group.Key, colors), SymbolType.Circle);
