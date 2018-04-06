@@ -25,24 +25,24 @@ import tensorflow as tf
 from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
 import visualizations as vis
 
-
+#number of iterations
 NUM_ITERS=5000
+
 DISPLAY_STEP=100
+
+#how many pictures are processed parallelly
 BATCH=100
 
-tf.set_random_seed(0)
-
-# Download images and labels 
+#data upload
 mnist = read_data_sets("MNISTdata", one_hot=True, reshape=False, validation_size=0)
 
 # mnist.test (10K images+labels) -> mnist.test.images, mnist.test.labels
 # mnist.train (60K images+labels) -> mnist.train.images, mnist.test.labels
 
-# Placeholder for input images, each data sample is 28x28 grayscale images
 # All the data will be stored in X - tensor, 4 dimensional matrix
 # The first dimension (None) will index the images in the mini-batch
 X = tf.placeholder(tf.float32, [None, 28, 28, 1])
-# correct answers will go here
+#placeholder for answers
 Y_ = tf.placeholder(tf.float32, [None, 10])
 # Probability of keeping a node during dropout = 1.0 at test time (no dropout) and 0.75 at training time
 pkeep = tf.placeholder(tf.float32)
@@ -55,27 +55,34 @@ C3 = 16 # third convolutional layer output depth
 
 FC4 = 256  # fully connected layer
 
+# standarddeviation for normal distribution
+STDEV = 0.1
 
-# weights - initialized with random values from normal distribution mean=0, stddev=0.1
+# windows sizes
+WS1 = 5
+WS2 = 3
+WS3 = 3
 
-# 5x5 conv. window, 1 input channel (gray images), C1 - outputs
-W1 = tf.Variable(tf.truncated_normal([5, 5, 1, C1], stddev=0.1))
-b1 = tf.Variable(tf.truncated_normal([C1], stddev=0.1))
-# 3x3 conv. window, C1 input channels(output from previous conv. layer ), C2 - outputs
-W2 = tf.Variable(tf.truncated_normal([3, 3, C1, C2], stddev=0.1))
-b2 = tf.Variable(tf.truncated_normal([C2], stddev=0.1))
-# 3x3 conv. window, C2 input channels(output from previous conv. layer ), C3 - outputs
-W3 = tf.Variable(tf.truncated_normal([3, 3, C2, C3], stddev=0.1))
-b3 = tf.Variable(tf.truncated_normal([C3], stddev=0.1))
+# weights - initialized with random values from normal distribution mean=0, stddev=STDEV
+
+# WS1 x WS1 conv. window, 1 input channel (gray images), C1 - outputs
+W1 = tf.Variable(tf.truncated_normal([WS1, WS1, 1, C1], stddev=STDEV))
+b1 = tf.Variable(tf.truncated_normal([C1], stddev=STDEV))
+# WS2 x WS2 conv. window, C1 input channels(output from previous conv. layer ), C2 - outputs
+W2 = tf.Variable(tf.truncated_normal([WS2, WS2, C1, C2], stddev=STDEV))
+b2 = tf.Variable(tf.truncated_normal([C2], stddev=STDEV))
+# WS3 x WS3 conv. window, C2 input channels(output from previous conv. layer ), C3 - outputs
+W3 = tf.Variable(tf.truncated_normal([WS3, WS3, C2, C3], stddev=STDEV))
+b3 = tf.Variable(tf.truncated_normal([C3], stddev=STDEV))
 # fully connected layer, we have to reshpe previous output to one dim, 
 # we have two max pool operation in our network design, so our initial size 28x28 will be reduced 2*2=4
 # each max poll will reduce size by factor of 2
-W4 = tf.Variable(tf.truncated_normal([7*7*C3, FC4], stddev=0.1))
-b4 = tf.Variable(tf.truncated_normal([FC4], stddev=0.1))
+W4 = tf.Variable(tf.truncated_normal([7*7*C3, FC4], stddev=STDEV))
+b4 = tf.Variable(tf.truncated_normal([FC4], stddev=STDEV))
 
 # output softmax layer (10 digits)
-W5 = tf.Variable(tf.truncated_normal([FC4, 10], stddev=0.1))
-b5 = tf.Variable(tf.truncated_normal([10], stddev=0.1))
+W5 = tf.Variable(tf.truncated_normal([FC4, 10], stddev=STDEV))
+b5 = tf.Variable(tf.truncated_normal([10], stddev=STDEV))
 
 # flatten the images, unroll each image row by row, create vector[784] 
 # -1 in the shape definition means compute automatically the size of this dimension
