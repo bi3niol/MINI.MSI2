@@ -7,30 +7,34 @@ using System.Threading.Tasks;
 
 namespace KNN.Library
 {
-	public sealed class AlgorithmEngine<T, TClassifier> where T : IMetricable<T>, IClassifiable<TClassifier>
+	public sealed class AlgorithmEngine<T, TCluster> where T : IMetricable<T>, IClusterable<TCluster>
 	{
 		/// <summary>
 		/// indicates norm
+        /// PUBLIC SET
 		/// </summary>
 		public double P
 		{
-			get; private set;
+			get; set;
 		}
 		public List<T> TrainSet
 		{
 			get; private set;
 		}
-
+        /// <summary>
+        /// PUBLIC SET
+        /// </summary>
         public List<T> TestSet
         {
-            get; private set;
+            get; set;
         }
         /// <summary>
         /// number of neighbors
+        /// PUBLIC SET
         /// </summary>
         public int K
 		{
-			get; private set;
+			get; set;
 		}
 
 		public AlgorithmEngine(int k, double p, List<T> trainSet, List<T> testSet)
@@ -41,36 +45,24 @@ namespace KNN.Library
             TestSet = testSet;
 		}
 
-        public List<Tuple<T, TClassifier>> KnnRun()
-        {
-            List<Tuple<T, TClassifier>> results = new List<Tuple<T, TClassifier>>();
-
-            foreach (var item in TestSet)
-            {
-                Console.WriteLine("Trwa obliczanie...");
-                results.Add(new Tuple<T, TClassifier>(item, GetMostCommonClassifier(GetKNeighbors(item))));
-            }
-
-            return results;
-        }
 
         public List<T> KnnRunParallel()
         {
-            this.TestSet.AsParallel().ForAll(x => { x.Classifier = GetMostCommonClassifier(GetKNeighbors(x)); });
+            this.TestSet.AsParallel().ForAll(x => { x.Cluster = GetMostCommonClassifier(GetKNeighbors(x)); });
 
             return this.TestSet;
         }
 
-        private TClassifier GetMostCommonClassifier(List<T> list)
+        private TCluster GetMostCommonClassifier(List<T> list)
 		{
-			Dictionary<TClassifier, int> counters = new Dictionary<TClassifier, int>();
-			TClassifier res = default(TClassifier);
+			Dictionary<TCluster, int> counters = new Dictionary<TCluster, int>();
+			TCluster res = default(TCluster);
 			int count = 0;
 			foreach (var item in list)
 			{
-				var key = item.Classifier;
+				var key = item.Cluster;
 				if (counters.ContainsKey(key))
-					counters[key]++;  //check if it not throws exception
+					counters[key]++;
 				else
 					counters.Add(key, 1);
 				if (count < counters[key])
@@ -84,18 +76,32 @@ namespace KNN.Library
 	
 		private List<T> GetKNeighbors(T element)
 		{
-            SortedList<double, T> sortedList = new SortedList<double, T>(Comparer<double>.Default);
-			foreach (var item in TrainSet) {
-				double distance = item.NormP(element, P);
-				if (sortedList.Count < K)
-					sortedList.Add(distance, item);
-				else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
+            PriorityQueue<Tuple<double, T>> queue = new PriorityQueue<Tuple<double, T>>(K);
+            foreach (var item in TrainSet)
+            {
+                double distance = item.NormP(element, P);
+                if (queue.Count < K)
+                    queue.Put(new Tuple<double, T>(distance, item));
+                else if (queue.Peek().Item1 > distance)
                 {
-                    sortedList.RemoveAt(sortedList.Count - 1);
-                    sortedList.Add(distance, item);
+                    queue.Get();
+                    queue.Put(new Tuple<double, T>(distance, item));
                 }
             }
-			return sortedList.Values.ToList();
-		}
-	}
+            return queue.Items.Select(t => t.Item2).ToList();
+
+            //SortedList<double, T> sortedList = new SortedList<double, T>(Comparer<double>.Default);
+            //foreach (var item in TrainSet) {
+            //    double distance = item.NormP(element, P);
+            //    if (sortedList.Count < K)
+            //        sortedList.Add(distance, item);
+            //    else if (sortedList.ElementAt(sortedList.Count - 1).Key > distance)
+            //    {
+            //        sortedList.RemoveAt(sortedList.Count - 1);
+            //        sortedList.Add(distance, item);
+            //    }
+            //}
+            //return sortedList.Values.ToList();
+        }
+    }
 }

@@ -34,7 +34,7 @@ namespace CorrectnessChecker
                     n = 5;
 
             TestSet = TestSet.TakeEverNth(n).Cast<Point>().ToList();
-            goodRes = TestSet.Select(x => x.Classifier).ToArray();
+            goodRes = TestSet.Select(x => x.Cluster).ToArray();
 
             test.GoodClassification = goodRes;
             var alg = new AlgorithmEngine<Point, int>(2, 2, TrainSet, TestSet);
@@ -42,33 +42,65 @@ namespace CorrectnessChecker
             K_Test(alg, args[2]);
             alg.K = 6;
             P_Test(alg, args[2]);
+            All_Test(alg, args[2]);
             Console.Read();
+        }
+        private static void All_Test(AlgorithmEngine<Point, int> algorithm, string fileName)
+        {
+            Console.WriteLine("All_Test");
+            StringBuilder content = new StringBuilder();
+            Console.WriteLine("K;P;%");
+            content.AppendLine("K;P;%");
+            double res;
+            for (int i = 2; i <= 8; i += 2)
+            {
+                algorithm.P = i == 8 ? double.PositiveInfinity : i;
+                for (int k = 1; k <= 100; k += 2)
+                {
+                    algorithm.K = k;
+                    res = test.RunTest(algorithm.KnnRunParallel());
+                    content.AppendLine($"{k};{algorithm.P};{res}");
+                    Console.WriteLine($"{k};{algorithm.P};{res}");
+                }
+            }
+            File.WriteAllText("K_P_" + fileName, content.ToString());
         }
 
         private static void K_Test(AlgorithmEngine<Point, int> algorithm, string fileName)
         {
             StringBuilder content = new StringBuilder();
+            Console.WriteLine("K_Test");
             content.AppendLine("K;%");
-            for (int k = 2; k < 20; k += 2)
+            double res;
+            for (int k = 2; k <= 30; k += 2)
             {
                 algorithm.K = k;
-                content.AppendLine($"{k};{test.RunTest(algorithm.KnnRunParallel())}");
+                res = test.RunTest(algorithm.KnnRunParallel());
+                content.AppendLine($"{k};{res}");
+                Console.WriteLine($"{k};{res}");
             }
-            File.WriteAllText("K_"+fileName, content.ToString());
+            File.WriteAllText("K_" + fileName, content.ToString());
         }
 
         private static void P_Test(AlgorithmEngine<Point, int> algorithm, string fileName)
         {
             StringBuilder content = new StringBuilder();
+            Console.WriteLine("P_Test");
             content.AppendLine("P;%");
+            Console.WriteLine("P;%");
+            double res;
             for (int k = 2; k < 6; k += 1)
             {
                 algorithm.P = k;
-                content.AppendLine($"{k};{test.RunTest(algorithm.KnnRunParallel())}");
+                res = test.RunTest(algorithm.KnnRunParallel());
+                content.AppendLine($"{k};{res}");
+                Console.WriteLine($"{k};{res}");
             }
             algorithm.P = double.PositiveInfinity;
-            content.AppendLine($"{algorithm.P};{test.RunTest(algorithm.KnnRunParallel())}");
-            File.WriteAllText("P_"+fileName, content.ToString());
+            res = test.RunTest(algorithm.KnnRunParallel());
+            content.AppendLine($"{algorithm.P};{res}");
+            Console.WriteLine($"{algorithm.P};{res}");
+            File.WriteAllText("P_" + fileName, content.ToString());
         }
     }
 }

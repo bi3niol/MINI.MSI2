@@ -18,12 +18,28 @@ namespace KNN.WindowApp
         private GraphManager.GraphManager graphManager;
         private List<KNN.Solver.ProblemEntities.Point> trainData;
         private List<KNN.Solver.ProblemEntities.Point> testData;
+        private List<KNN.Solver.ProblemEntities.Point> surfaceTestData;
         private int k;
         private double p;
 
         public KNN_Window()
         {
             InitializeComponent();
+            surfaceTestData = new List<Solver.ProblemEntities.Point>();
+            decimal x = -1;
+            decimal y = -1;
+            decimal max = 1;
+            decimal step = 0.01M;
+            do
+            {
+                do
+                {
+                    surfaceTestData.Add(new Solver.ProblemEntities.Point((float)x, (float)y));
+                    y += step;
+                } while (y != max);
+                x = x + step;
+                y = -1;
+            } while (x != max);
         }
 
         private void KNN_Window_Load(object sender, EventArgs e)
@@ -41,7 +57,7 @@ namespace KNN.WindowApp
             graphPane.XAxis.Scale.MaxAuto = graphPane.XAxis.Scale.MinAuto = graphPane.YAxis.Scale.MaxAuto = graphPane.YAxis.Scale.MinAuto = true;
             graphPane.XAxis.Scale.Min = graphPane.YAxis.Scale.Min = -1;
             graphPane.XAxis.Scale.Max = graphPane.YAxis.Scale.Max = 1;
- 
+
             updateControlsAvailibility(false);
         }
 
@@ -60,6 +76,24 @@ namespace KNN.WindowApp
             pLabel.Text = $"P = {p.ToString()}";
         }
 
+        private void KnnForSurface_Click(object sender, EventArgs e)
+        {
+            bool canRun = true;
+            StringBuilder msg = new StringBuilder();
+            if (trainData == null)
+            {
+                msg.AppendLine("-Train data is required.");
+                canRun = false;
+            }
+         
+            if (canRun)
+            {
+                RunKnn(trainData, surfaceTestData);
+            }
+            else
+                MessageBox.Show(msg.ToString(), "Warnings:");
+        }
+
         private void RunBtn_Click(object sender, EventArgs e)
         {
             bool canRun = true;
@@ -75,13 +109,21 @@ namespace KNN.WindowApp
                 canRun = false;
             }
             if (canRun) {
-                updateControlsAvailibility(true);
-                List<Solver.ProblemEntities.Point> res = new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>(k, p, trainData, testData).KnnRunParallel();
-                graphManager.UpdateGraph(res);
-                updateControlsAvailibility(false);
+                RunKnn(trainData, testData);
             }
             else
                 MessageBox.Show(msg.ToString(), "Warnings:");
+        }
+
+        private void RunKnn(List<Solver.ProblemEntities.Point> trainData, List<Solver.ProblemEntities.Point> testData)
+        {
+            updateControlsAvailibility(true);
+            graphManager.ClearGraph();
+            List<Solver.ProblemEntities.Point> res = new AlgorithmEngine<KNN.Solver.ProblemEntities.Point, int>(k, p, trainData, testData).KnnRunParallel();
+            graphManager.PrintTemplatePoints(trainData);
+            graphManager.PrintClassifiedPoints(testData);
+            graphManager.UpdateGraph();
+            updateControlsAvailibility(false);
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
