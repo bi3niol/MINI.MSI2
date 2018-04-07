@@ -37,10 +37,10 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 model = Sequential([Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=input_shape),
                     Conv2D(64, (3, 3), activation='relu'),
                     MaxPooling2D(pool_size=(2, 2)),
-                    Dropout(0.5),   
+                    Dropout(0.2),   
                     Flatten(),
                     Dense(128, activation='relu'),
-                    Dropout(0.5),
+                    #Dropout(0.5),
                     Dense(num_classes, activation='softmax')])
 
 # określenie sposobu obliczania błędu (categorical_crossentropy), optymalizatora służącego do aktualizacji wag (Adadelta)
@@ -62,7 +62,7 @@ model.fit(X_train,
 
 # testowanie
 
-score = model.evaluate(x_test, y_test, verbose=0)
+score = model.evaluate(X_test, y_test, verbose=0)
 print('loss:', score[0])
 print('accuracy:', score[1])
 

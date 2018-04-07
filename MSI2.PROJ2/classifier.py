@@ -273,6 +273,7 @@ def plot(results):
 
 
 if __name__ == '__main__':
+
     # Download the data set from URL
     print("Downloading data from {}".format(URL))
     frame = download_data()
