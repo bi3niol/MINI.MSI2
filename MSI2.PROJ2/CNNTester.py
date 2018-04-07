@@ -3,6 +3,7 @@ from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 import pandas as pd
+import time
 
 class CNNTester(object):
     """
@@ -40,6 +41,7 @@ class CNNTester(object):
         return
     def OneConvOneDense(self):
         data = []
+        file = 'OneConvMaxPoolOneDense' + str.format('{}',time.time()) + '.csv'
         for x in range(3,28,4):
             print('calculate for ',x)
             model, tt,history = self.GetModelTrained([Conv2D(32, kernel_size=(x, x), activation='relu', input_shape=(28,28,1)),
@@ -48,9 +50,57 @@ class CNNTester(object):
             data.append({'time':tt,'itterations':6,'acc':history.history['acc'],'kernelSize':x})
             df = pd.DataFrame(data)
             print('saving result')
-            df.to_csv("./OneConvOneDense.csv",';')
-            print('saved to OneConvOneDense.csv')
+            df.to_csv("./"+file,';')
+            print('saved to ',file)
         pass
+    def OneConvMaxPoolTwoDense(self):
+        data = []
+        file = 'OneConvMaxPoolTwoDense' + str.format('{}',time.time()) + '.csv'
+        for x in [3,7,11,14]:
+            print('calculate for ',x)
+            model, tt,history = self.GetModelTrained([Conv2D(32, kernel_size=(x, x), activation='relu', input_shape=(28,28,1)),
+                        MaxPooling2D(pool_size=(2, 2)),
+                        Dense(128, activation='relu'),
+                        Flatten(),
+                        Dense(10, activation='softmax')],step=4,epochsM=6)
+            data.append({'time':tt,'itterations':6,'acc':history.history['acc'],'kernelSize':x})
+            df = pd.DataFrame(data)
+            print('saving result')
+            df.to_csv("./" + file,';')
+            print('saved to ',file)
+        pass
+
+    def OneConvTwoDense(self):
+        data = []
+        file = 'OneConvTwoDense' + str.format('{}',time.time()) + '.csv'
+        for x in [3,7,11,14,20,28]:
+            print('calculate for ',x)
+            model, tt,history = self.GetModelTrained([Conv2D(32, kernel_size=(x, x), activation='relu', input_shape=(28,28,1)),
+                        Dense(128, activation='relu'),
+                        Flatten(),
+                        Dense(10, activation='softmax')],step=4,epochsM=6)
+            data.append({'time':tt,'itterations':6,'acc':history.history['acc'],'kernelSize':x})
+            df = pd.DataFrame(data)
+            print('saving result')
+            df.to_csv("./" + file,';')
+            print('saved to ',file)
+        pass
+    def TwoConvOneDense(self):
+        data = []
+        file = 'TwoConvOneDense' +str.format('{}',time.time())+ '.csv'
+        for x in [3,7,11,20,28]:
+            print('calculate for ',x)
+            model, tt,history = self.GetModelTrained([Conv2D(32, kernel_size=(x, x), activation='relu', input_shape=(28,28,1)),
+                        Conv2D(64, (3, 3), activation='relu'),
+                        Flatten(),
+                        Dense(10, activation='softmax')],step=4,epochsM=6)
+            data.append({'time':tt,'itterations':6,'acc':history.history['acc'],'kernelSize':x})
+            df = pd.DataFrame(data)
+            print('saving result')
+            df.to_csv("./" + file,';')
+            print('saved to ',file)
+        pass
+
 
     def GetModelTrained(self,layers,lossM=keras.losses.categorical_crossentropy,optM=keras.optimizers.Adadelta,metricsM=['accuracy'],epochsM=1,batch_sizeM=128,step=1):
         model = Sequential(layers)
@@ -58,7 +108,6 @@ class CNNTester(object):
         model.compile(loss=lossM,
               optimizer=optM(),
               metrics=metricsM)
-        import time
         ct = time.time()
         history = model.fit(CNNTester.X_train[0:len(CNNTester.X_train):step],
           CNNTester.y_train[0:len(CNNTester.y_train):step],
@@ -72,5 +121,7 @@ class CNNTester(object):
 if(__name__ == "__main__"):
     print('sadw')
     train = CNNTester()
-    train.OneConvOneDense()
+    train.OneConvMaxPoolTwoDense()
+    train.OneConvTwoDense()
+    #train.OneConvOneDense()
     
