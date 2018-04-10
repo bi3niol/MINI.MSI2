@@ -20,11 +20,24 @@ class CNNTester:
         file = str.format('test_{}.csv', time.time())
         data = []
         reader = MNISTReader.MNISTReader()
-        testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes), "model1", data)
-        testModel(reader, NetworkModels.model2(reader.input_shape, reader.num_classes), "model2", data)
-        testModel(reader, NetworkModels.model3(reader.input_shape, reader.num_classes), "model3", data)
-        testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes), "model4", data)
-        testModel(reader, NetworkModels.model5(reader.input_shape, reader.num_classes), "model5", data)
+        for k in range(2,20,5):
+            for p in range(2,3):
+                for d in range (1,6):
+                    testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (k, k), (p, p), d/10  ), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ", k, k, p, p, d/10), data)
+        for k in range(2,20,5):
+            for p in range(2,3):
+                testModel(reader, NetworkModels.model2(reader.input_shape, reader.num_classes, (k, k), (p, p)), str.format("model2, kernel: ({},{}), pool: ({}, {}) ", k, k, p, p), data)
+        
+        for k in range(2,20,5):
+            testModel(reader, NetworkModels.model3(reader.input_shape, reader.num_classes, (k, k)), str.format("model3, kernel: ({},{})", k, k), data)
+        for k1 in range(2,20,5):
+        for k2 in range(2,20,5):
+                testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes, (k1, k1), (k2, k2)), str.format("model4, kernel1: ({},{}), kernel2:({}, {})", k1, k1, k2, k2), data)
+        for k in range(2,20,5):
+            for p in range(2,3):
+                for d in range (1,6):
+                    testModel(reader, NetworkModels.model5(reader.input_shape, reader.num_classes, (k, k), (p, p), d/10  ), str.format("model5, kernel: ({},{}), pool: ({}, {}), dropout: {} ", k, k, p, p, d/10), data)
+      
 
         df = pd.DataFrame(data)
         print('Saving results...')
