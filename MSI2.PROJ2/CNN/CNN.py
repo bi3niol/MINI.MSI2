@@ -8,11 +8,11 @@ import time
 
 class CNN:
 
-    def RunCNN(reader: MNISTReader, model: Sequential, iterations: int, lossFunc: keras.losses=keras.losses.categorical_crossentropy, optimizerMethod: keras.optimizers=keras.optimizers.Adadelta):
+    def RunCNN(reader: MNISTReader, model: Sequential, iterations: int, optimizerMethod: keras.optimizers=keras.optimizers.Adadelta):
         
         # określenie sposobu obliczania błędu (categorical_crossentropy), optymalizatora służącego do aktualizacji wag (Adadelta)
         # i metryki oceny sieci (accuracy)
-        model.compile(loss=lossFunc, optimizer=optimizerMethod(), metrics=['accuracy'])
+        model.compile(loss=keras.losses.categorical_crossentropy, optimizer=optimizerMethod(), metrics=['accuracy'])
         startTime = time.time()
         # uczenie sieci:
         #   X_train, y_train - dane uczące
@@ -22,7 +22,6 @@ class CNN:
         t = time.time() - startTime
         # testowanie
         score = model.evaluate(reader.X_test, reader.y_test, verbose=0)
-        #print('loss:', score[0])
-        #print('accuracy:', score[1])
+        print(' ACCURACY:', score[1])
         return score[1], t
    
