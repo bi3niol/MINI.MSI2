@@ -25,16 +25,4 @@ class CNN:
         #print('loss:', score[0])
         #print('accuracy:', score[1])
         return score[1], t
-    
-
-## budowa sieci - wybrany model
-#model = NetworkModels.model1(reader.input_shape, reader.num_classes)
-
-
-
-
-
-# przewidywanie
-
-#prediction = model.predict_classes(X_test, verbose = 1);
-#print(prediction);
+   

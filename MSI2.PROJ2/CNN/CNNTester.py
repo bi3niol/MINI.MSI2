@@ -3,30 +3,26 @@ import CNN
 import NetworkModels
 import time
 import pandas as pd
+import keras
+from keras import Sequential
 
 
 class CNNTester:
 
-    #def TestMethod():
-    #    colNames = ['accuracy','train_time',]
-    #    testResults = pd.DataFrame([],columns=colNames)
-
-    #    layersSet = []
-    #    model = self.GetModelTrained()
-    #    return
-
-    def model1(reader: MNISTReader.MNISTReader):
+    def testModel(reader: MNISTReader.MNISTReader, model: keras.Sequential, modelName: str):
         data = []
-        file = 'model1' + str.format('{}',time.time()) + '.csv'
-        for x in range(3,28,4):
-            print('calculate for ',x)
-            accuracy, duration = CNN.CNN.RunCNN(reader, NetworkModels.model1(reader.input_shape, reader.num_classes), 1)
-            data.append({'time': duration,'itterations': 1,'acc': accuracy})
+        file = str.format('{}_{}.csv',modelName, time.time())
+        for i in range(1,2):
+            print('Calculating for ', i)
+            accuracy, duration = CNN.CNN.RunCNN(reader, model, i)
+            data.append({'iterations': i, 'time': duration,'accuracy': accuracy})
             df = pd.DataFrame(data)
-            print('saving result')
+            print('Saving results...')
             df.to_csv("./"+file,';')
-            print('saved to ',file)
+            print('Results saved to ',file)
         pass
+
+   
     #def OneConvMaxPoolTwoDense():
     #    data = []
     #    file = 'OneConvMaxPoolTwoDense' + str.format('{}',time.time()) + '.csv'
@@ -77,6 +73,6 @@ class CNNTester:
 
     if __name__ == '__main__':
         reader = MNISTReader.MNISTReader()
-        model1(reader)
+        testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes), "model1")
 
     
