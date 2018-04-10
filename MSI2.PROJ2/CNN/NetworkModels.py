@@ -18,7 +18,6 @@ def model1(input_shp, num_classes):
                     Dropout(0.2),   
                     Flatten(),
                     Dense(128, activation='relu'),
-                    #Dropout(0.5),
                     Dense(num_classes, activation='softmax')])
 
 def model2(input_shp, num_classes):

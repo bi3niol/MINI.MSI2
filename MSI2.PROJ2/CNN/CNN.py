@@ -10,7 +10,7 @@ class CNN:
 
     def RunCNN(reader: MNISTReader, model: Sequential, iterations: int, optimizerMethod: keras.optimizers=keras.optimizers.Adadelta):
         
-        # określenie sposobu obliczania błędu (categorical_crossentropy), optymalizatora służącego do aktualizacji wag (Adadelta)
+        # określenie sposobu obliczania funkcji celu-błędu (categorical_crossentropy), optymalizatora służącego do minimalizacji funkcji celu przez zmianę wag (Adadelta)
         # i metryki oceny sieci (accuracy)
         model.compile(loss=keras.losses.categorical_crossentropy, optimizer=optimizerMethod(), metrics=['accuracy'])
         startTime = time.time()

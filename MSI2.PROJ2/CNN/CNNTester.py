@@ -11,7 +11,7 @@ class CNNTester:
 
     def testModel(reader: MNISTReader.MNISTReader, model: keras.Sequential, modelName: str, data):
         for i in range(1,4):
-            print(modelName+ ' - calculating for ', i)
+            print(modelName+ ' - Iteration: ', i)
             accuracy, duration = CNN.CNN.RunCNN(reader, model, 1)
             data.append({'model': modelName, 'iterations': i, 'time': duration,'accuracy': accuracy})
         pass
