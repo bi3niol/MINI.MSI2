@@ -8,7 +8,7 @@ from keras import Sequential
 
 
 class CNNTester:
-    def testModel(reader: MNISTReader.MNISTReader, model: keras.Sequential, modelName: str, data, FileName="TestResult.csv"):
+    def testModel(reader: MNISTReader.MNISTReader, model: keras.Sequential, modelName: str, data, FileName="CNN_TestResult.csv"):
         if model == None:
             print("invalid model {}",modelName)
             return
@@ -22,7 +22,7 @@ class CNNTester:
         print('Results saved to ',FileName)
 
     if __name__ == '__main__':
-        fileName = str.format('test_{}.csv', time.time())
+        fileName = str.format('CNN_test_{}.csv', time.time())
         data = []
         reader = MNISTReader.MNISTReader()
         for k in range(2,20,5):
