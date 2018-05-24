@@ -58,16 +58,16 @@ def download_data_sets():
 
     X_train = X_train.astype('float32')
     X_test = X_test.astype('float32')
-    X_train[X_train > 0] = 1
-    X_test[X_test > 0] = 1
-
-    print(X_train.shape)
-    print(y_test.shape)
+    X_train[X_train > 0.5] = 1
+    X_test[X_test > 0.5] = 1
+    X_train[X_train <= 0.5] = 0
+    X_test[X_test <= 0.5] = 0
+    print(np.sum(X_test))
 
     #y_train = keras.utils.to_categorical(y_train, 10)
     #y_test = keras.utils.to_categorical(y_test, 10)
 
-    return (X_train[1::20], y_train[1::20]), (X_test, y_test)
+    return (X_train[1::1], y_train[1::1]), (X_test, y_test)
 
 
 # =====================================================================
@@ -81,7 +81,7 @@ def evaluate_classifier(X_train, X_test, y_train, y_test):
     def GetClassifiers():
         for c in [1,2,3,4,5,6]:
             for g in [1,4,7,10,14]:
-                yield (c/5,g/1000,SVC(C=c,gamma=g))
+                yield (c/5,g/1000,SVC(C=c/5,gamma=g/1000))
 
     def AccuracyFunc(orgin,predic):
         tmp = orgin == predic
@@ -103,7 +103,7 @@ def evaluate_classifier(X_train, X_test, y_train, y_test):
         accuracy = AccuracyFunc(y_test,predicted)
         res.append({"C":c,"G":g,"Accuracy":accuracy,"Time":tt})
 
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(res)
         print('Saving results...')
         df.to_csv("./" + FileName,';')
         print('Results saved to ',FileName)
