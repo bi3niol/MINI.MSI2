@@ -33,6 +33,9 @@
     <Compile Include="CNN\CNNTester.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SVM\SVM.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CNN\" />
