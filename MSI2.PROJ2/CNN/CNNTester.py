@@ -13,8 +13,8 @@ class CNNTester:
             print("invalid model {}",modelName)
             return
         history, duration = CNN.CNN.RunCNN(reader, model, 1)
-        data.append({'model': modelName, 'iterations': 1, 'time': duration,'acc': history['acc'],
-                    'loss':history['loss'], 'val_acc':history['val_acc'],'val_loss':history['val_loss']})
+        data.append({'model': modelName, 'iterations': 1, 'time': round(duration, 2),'acc': [ round(elem, 4) for elem in history['acc']],
+                    'loss': [ round(elem, 4) for elem in history['loss']], 'val_acc': [ round(elem, 4) for elem in history['val_acc']],'val_loss': [ round(elem, 4) for elem in history['val_loss']]})
 
         df = pd.DataFrame(data)
         print('Saving results...')

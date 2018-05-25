@@ -1,51 +1,11 @@
-'''
-This script performs the basic process for applying a machine learning
-algorithm to a dataset using Python libraries.
-
-The four steps are:
-   1. Download a dataset (using pandas)
-   2. Process the numeric data (using numpy)
-   3. Train and evaluate learners (using scikit-learn)
-   4. Plot and compare results (using matplotlib)
-
-
-The data is downloaded from URL, which is defined below. As is normal
-for machine learning problems, the nature of the source data affects
-the entire solution. When you change URL to refer to your own data, you
-will need to review the data processing steps to ensure they remain
-correct.
-
-============
-Example Data
-============
-The example is from http://mlr.cs.umass.edu/ml/datasets/Spambase
-It contains pre-processed metrics, such as the frequency of certain
-words and letters, from a collection of emails. A classification for
-each one indicating 'spam' or 'not spam' is in the final column.
-See the linked page for full details of the data set.
-
-This script uses three classifiers to predict the class of an email
-based on the metrics. These are not representative of modern spam
-detection systems.
-'''
-
-# Remember to update the script for the new data when you change this URL
-URL = "http://mlr.cs.umass.edu/ml/machine-learning-databases/spambase/spambase.data"
-
-# Uncomment this call when using matplotlib to generate images
-# rather than displaying interactive UI.
-#import matplotlib
-#matplotlib.use('Agg')
 import pandas as pd
 from pandas import read_table
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import keras
 from keras.datasets import mnist
 
 try:
-    # [OPTIONAL] Seaborn makes plots nicer
     import seaborn
 except ImportError:
     pass
@@ -53,8 +13,8 @@ except ImportError:
 # =====================================================================
 def download_data_sets():
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
-    X_train = X_train.reshape(X_train.shape[0],28 * 28)
-    X_test = X_test.reshape(X_test.shape[0],28 * 28)
+    X_train = X_train.reshape(X_train.shape[0], 28 * 28)
+    X_test = X_test.reshape(X_test.shape[0], 28 * 28)
 
     X_train = X_train.astype('float32')
     X_test = X_test.astype('float32')
@@ -110,7 +70,7 @@ def evaluate_classifier(X_train, X_test, y_train, y_test):
         # =====================================================================
 def plot(results):
     fig = plt.figure(figsize=(6, 6))
-    fig.canvas.set_window_title('Classifying data from ' + URL)
+    fig.canvas.set_window_title('Classifying data...')
 
     for label, precision, recall in results:
         plt.plot(recall, precision, label=label)
