@@ -1,2 +1,0 @@
-;acc;iterations;loss;model;time;val_acc;val_loss
-0;[0.7654999996821086];1;[0.7988470215797424];model1, kernel: (2,2), pool: (2, 2), dropout: 0.1 ;28.153844118118286;[0.8625];[0.4399574010372162]
