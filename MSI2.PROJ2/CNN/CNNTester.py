@@ -12,9 +12,9 @@ class CNNTester:
         if model == None:
             print("invalid model {}",modelName)
             return
-        history, duration = CNN.CNN.RunCNN(reader, model, 20)
-        data.append({'model': modelName, 'iterations': 20, 'time': round(duration, 2),'acc': [ round(elem, 4) for elem in history['acc']],
-                    'loss': [ round(elem, 4) for elem in history['loss']], 'val_acc': [ round(elem, 4) for elem in history['val_acc']],'val_loss': [ round(elem, 4) for elem in history['val_loss']]})
+        _loss,_acc,_val_loss,_val_acc,_times = CNN.CNN.RunCNN(reader, model, 20)
+        data.append({'model': modelName, 'iterations': 20, 'time': [round(duration, 2) for duration in _times],'acc': [ round(elem, 4) for elem in _acc],
+                    'loss': [ round(elem, 4) for elem in _loss], 'val_acc': [ round(elem, 4) for elem in _val_acc],'val_loss': [ round(elem, 4) for elem in _val_loss]})
 
         df = pd.DataFrame(data)
         print('Saving results...')
@@ -22,7 +22,7 @@ class CNNTester:
         print('Results saved to ',FileName)
 
     if __name__ == '__main__':
-        fileName = 'CNN_Model4.csv'#str.format('CNN_test_{}.csv', time.time())
+        fileName = 'CNN_Model5.csv'#str.format('CNN_test_{}.csv', time.time())
         data = []
         reader = MNISTReader.MNISTReader()
         #testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (7,7), (2,2), 0.1), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ", 7, 7, 2, 2, 0.1), data)
