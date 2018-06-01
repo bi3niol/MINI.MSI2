@@ -16,10 +16,12 @@ class CNN:
         # i metryki oceny sieci (accuracy)
         model.compile(loss=keras.losses.categorical_crossentropy, optimizer=optimizerMethod(), metrics=['accuracy'])
         _times=[]
-        _acc = []
-        _loss=[]
+        _test_acc = []
+        _test_loss=[]
         _val_loss=[]
         _val_acc=[]
+        _train_acc = []
+        _train_loss = []
         # uczenie sieci:
         #   X_train, y_train - dane uczące
         #   batch_size - liczba przetwarzanych obrazków na aktualizację
@@ -27,18 +29,21 @@ class CNN:
         #   dane uczące)
         i = 1
         startTime = time.time()
-        while i <= iterations:
-            trainRes = model.fit(reader.X_train, reader.y_train, batch_size=128, epochs=1, verbose=1,validation_split = 0.2)
+        for i in range (iterations):
+            trainRes = model.fit(reader.X_train, reader.y_train, batch_size=128, epochs=1, verbose=1, validation_split = 0.2)
             t = time.time() - startTime
-            #acc loss - ze zbioru treningowego
+            
+            _train_acc.append(trainRes.history["acc"][0])
+            _train_loss.append(trainRes.history["loss"][0])
+
             _val_acc.append(trainRes.history["val_acc"][0])
             _val_loss.append(trainRes.history["val_loss"][0])
             _times.append(t)
-            rr = model.evaluate(reader.X_test,reader.y_test)
-            #acc loss - ze zbiuru testowego
-            _loss.append(rr[0])
-            _acc.append(rr[1])
-            pass
 
-        return (_loss,_acc,_val_loss,_val_acc,_times)
+            rr = model.evaluate(reader.X_test,reader.y_test)
+
+            _test_loss.append(rr[0])
+            _test_acc.append(rr[1])
+
+        return (_test_loss, _test_acc, _val_loss, _val_acc, _train_loss, _train_acc, _times)
    
