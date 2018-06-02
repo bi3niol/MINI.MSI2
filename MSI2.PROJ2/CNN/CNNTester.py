@@ -26,15 +26,15 @@ class CNNTester:
         print('Results saved to ',FileName)
 
     if __name__ == '__main__':
-        fileName = 'CNN_Model4.csv'#str.format('CNN_test_{}.csv', time.time())
+        fileName = 'CNN_Model1.csv'#str.format('CNN_test_{}.csv', time.time())
         data = []
         reader = MNISTReader.MNISTReader()
-        #testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (7,7), (2,2), 0.1), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ", 7, 7, 2, 2, 0.1), data)
-        #testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (7,7), (2,2), 0.2), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ",7, 7, 2, 2, 0.2), data)
-        #testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (2,2), (2,2), 0.2), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ", 2, 2, 2, 2, 0.2), data)
-        testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes, (7,7), (7,7)), str.format("model4, kernel1: ({},{}), kernel2:({}, {})", 7,7,7,7), data,fileName)
-        testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes, (7,7), (2,2)), str.format("model4, kernel1: ({},{}), kernel2:({}, {})", 7,7,2,2), data,fileName)
-        testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes, (12,12), (2,2)), str.format("model4, kernel1: ({},{}), kernel2:({}, {})", 12,12,2,2), data,fileName)
+        testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (7,7), (2,2), 0.1), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ", 7, 7, 2, 2, 0.1), data)
+        testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (7,7), (2,2), 0.2), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ",7, 7, 2, 2, 0.2), data)
+        testModel(reader, NetworkModels.model1(reader.input_shape, reader.num_classes, (2,2), (2,2), 0.2), str.format("model1, kernel: ({},{}), pool: ({}, {}), dropout: {} ", 2, 2, 2, 2, 0.2), data)
+        #testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes, (7,7), (7,7)), str.format("model4, kernel1: ({},{}), kernel2:({}, {})", 7,7,7,7), data,fileName)
+        #testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes, (7,7), (2,2)), str.format("model4, kernel1: ({},{}), kernel2:({}, {})", 7,7,2,2), data,fileName)
+        #testModel(reader, NetworkModels.model4(reader.input_shape, reader.num_classes, (12,12), (2,2)), str.format("model4, kernel1: ({},{}), kernel2:({}, {})", 12,12,2,2), data,fileName)
 
         #for k in range(2,20,5):
         #    for p in range(2,3):

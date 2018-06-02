@@ -1,2 +1,0 @@
-;acc;iterations;loss;model;time;val_acc;val_loss
-0;[0.941];20;[0.1906];model4, kernel1: (7,7), kernel2:(7, 7);264.07;[0.9788];[0.0739]
