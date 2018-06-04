@@ -21,8 +21,7 @@ res = []
 FileName = str.format('SVM_test_{}.csv', time.time())
 
 def GetClassifiers():
-        #for c in [1,2,3,4,5,6]:
-         for c in [7,8,9,10,11,12]:
+        for c in [1,2,3,4,5,6,7,8,9,10,11,12]:
             for g in [1,4,7,10,14]:
                 yield (c/5,g/1000,svm.SVC(C=c/5,gamma=g/1000))
 
@@ -31,13 +30,7 @@ def AccuracyFunc(orgin,predic):
         res = np.sum(tmp) / len(orgin) * 100
         return res    
 
-#sample smaller size for testing
-#rand_idx = np.random.choice(images.shape[0],70000)
- 
 #scale data for [0,255] -> [0,1]
-
-#X_data =images[rand_idx]/255.0
-#Y      = targets[rand_idx]
 X_data =images/255.0
 Y      = targets
  

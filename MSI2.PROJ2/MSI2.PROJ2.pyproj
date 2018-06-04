@@ -26,7 +26,6 @@
     <Compile Include="CNN\NetworkModels.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SVM\classifier.py" />
     <Compile Include="CNN\CNN.py">
       <SubType>Code</SubType>
     </Compile>

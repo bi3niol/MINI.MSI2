@@ -45,16 +45,6 @@ def model4(input_shp, num_classes, kernel1, kernel2):
                         Flatten(),
                         Dense(num_classes, activation='softmax')])
 
-def model5(input_shp, num_classes, kernel, pool, dropout ):
-    return getModel([Conv2D(32, kernel_size=kernel, activation='relu', input_shape=input_shp),
-                    Conv2D(64, kernel, activation='relu'),
-                    MaxPooling2D(pool_size=pool),
-                    Conv2D(64, kernel, activation='relu'),
-                    Dropout(dropout),   
-                    Flatten(),
-                    Dense(128, activation='relu'),
-                    Dropout(dropout),
-                    Dense(num_classes, activation='softmax')])
 
 
 
